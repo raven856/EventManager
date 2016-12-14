@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-
 namespace EventManager.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -18,27 +17,43 @@ namespace EventManager.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-            //modelBuilder.Entity<PlaylistTag>()
-            //.HasKey(t => new { t.AlbumId, t.PlaylistId });
+            ////////modelBuilder.Entity<ApplicationUser>()
+            ////////    .HasMany(x => x.followers)
+            ////////    .WithMany(x => x.following)
+            ////////    .Map(x => x.ToTable("Followers")
+            ////////    .MapLeftKey("UserId")
+            ////////    .MapRightKey("FollowerId"));
 
-            //modelBuilder.Entity<PlaylistTag>()
-            //    .HasOne(pt => pt.aAlbum)
-            //    .WithMany(p => p.PlaylistTags)
-            //    .HasForeignKey(pt => pt.AlbumId);
+            modelBuilder.Entity<FollowingTag>()
+            .HasKey(t => new { t.followerId, t.followeeId });
 
-            //modelBuilder.Entity<PlaylistTag>()
-            //    .HasOne(pt => pt.aPlaylist)
-            //    .WithMany(t => t.PlaylistTags)
-            //    .HasForeignKey(pt => pt.PlaylistId);
+            modelBuilder.Entity<FollowingTag>()
+                .HasOne(ft => ft.follower)
+                .WithMany(u => u.FollowingTags)
+                .HasForeignKey(ft => ft.followerId).IsRequired();
 
+            modelBuilder.Entity<FollowingTag>()
+                .HasOne(ft => ft.followee)
+                .WithMany(u => u.FolloweeTags)
+                .HasForeignKey(ft => ft.followeeId);
+
+
+            modelBuilder.Entity<AttendanceTag>()
+            .HasKey(t => new { t.UserId, t.EventId });
+
+            modelBuilder.Entity<AttendanceTag>()
+                .HasOne(at => at.aUser)
+                .WithMany(p => p.AttendanceTags)
+                .HasForeignKey(at => at.UserId);
+
+            modelBuilder.Entity<AttendanceTag>()
+                .HasOne(at => at.anEvent)
+                .WithMany(t => t.AttendanceTags)
+                .HasForeignKey(at => at.EventId);
         }
 
         public DbSet<Event> Events { get; set; }
-
-        //public DbSet<> Artists { get; set; }
-        //public DbSet<Genre> Genres { get; set; }
-        //public DbSet<Playlist> Playlist { get; set; }
-        //public DbSet<PlaylistTag> PlaylistTag { get; set; }
-
+        public DbSet<FollowingTag> FollowingTags { get; set; }
+        public DbSet<AttendanceTag> AttendanceTags { get; set; }
     }
 }

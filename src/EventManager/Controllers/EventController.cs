@@ -24,10 +24,19 @@ namespace EventManager.Controllers
         {
             return View();
         }
-        public IActionResult AttendEvent(Event anEvent)
+        [HttpPost]
+        public IActionResult AttendEvent(int id)
         {
-
-            return View();
+            if(User.Identity.IsAuthenticated){
+                ApplicationUser currentUser = _db.Users.Where(u => u.UserName == User.Identity.Name).Single();
+                Event anEvent = _db.Events.Where(e => e.id == id).Single();
+                AttendanceTag tag = new AttendanceTag
+                {
+                    UserId = currentUser.Id,
+                    EventId = id
+                };
+            }
+            return RedirectToAction("Index","Home");
         }
         public IActionResult CreateEvent()
         {

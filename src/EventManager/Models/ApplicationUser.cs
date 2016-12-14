@@ -11,5 +11,11 @@ namespace EventManager.Models
     {
         public string bio { get; set; }
         public string name { get; set; }
+        public List<FollowingTag> FollowingTags { get; set; }
+        public List<FollowingTag> FolloweeTags { get; set; }
+        //public ICollection<ApplicationUser> followers { get; set; }
+        //public ICollection<ApplicationUser> following { get; set; }
+        public List<AttendanceTag> AttendanceTags { get; set; }
+
     }
 }

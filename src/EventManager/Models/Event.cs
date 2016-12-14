@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EventManager.Models
 {
@@ -12,5 +13,6 @@ namespace EventManager.Models
         public ApplicationUser artist { get; set; }
         public string genre { get; set; }
         public bool isCanceled { get; set; }
+        public List<AttendanceTag> AttendanceTags { get; set; }
     }
 }
