@@ -1,34 +1,36 @@
-﻿@model IEnumerable<EventManager.Models.Event>
+﻿<link href="~/css/Style.css" rel="stylesheet" />
+@model IEnumerable<EventManager.Models.Event>
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <h2>All Events</h2>
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Title)</a></th>
-            <th><a asp-action="IndexAlbum" asp-route-searchString="@ViewBag.Search" asp-route-sortOrder="@ViewBag.ArtistSortParm">@Html.DisplayNameFor(model => model.Artist)</a></th>
-        </tr>
-    </thead>*@
+
+
     @{
         foreach (var events in Model)
         {
-            <tr>
-                <td>@events.artist</td>
-                <td>@events.date </td>
-                <td>@events.genre</td>
-                <td>@events.description</td>
 
-                <td>
-                    @*not attending if attending*@
-                    <a asp-controller="Event" asp-action="AttendEvent" asp-route-id="@events.id">+Attend</a>
-                    @*<a asp-controller="Playlist" asp-action="AddToPlaylist" asp-route-id="@album.AlbumID">+Playlist</a>
-                    <a asp-action="DetailsAlbum" asp-route-id="@album.AlbumID">Details</a>
-                    <a asp-action="EditAlbum" asp-route-id="@album.AlbumID">Edit</a>
-                    <a asp-action="DeleteAlbum" asp-route-id="@album.AlbumID">Delete</a>*@
+            @*<div class="col-lg-3">*@
+                <time datetime=@events.date class="icon">
+                    <em>@events.date.DayOfWeek</em>
+                    <strong>@events.date.ToString("MMMM")</strong>
+                    <span>@events.date.Day</span>
+                </time>
+            @*</div>*@
+            <a asp-controller="Event" asp-action="AttendEvent" class="btn btn-info" id="attend" asp-route-id="@events.id">+Attend</a>
 
-                </td>
-            </tr>
+            @*<div class="col-lg-9">
+            </div>*@
         }
+
+        if (User.IsInRole("Artist"))
+        {
+            <br><br/>
+            <br />
+                    
+            <a class="btn btn-lg btn-primary" href="/Event/CreateEvent">Create an Event</a>
+        }
+        
+                
     }

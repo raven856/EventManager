@@ -1,0 +1,68 @@
+@model EventManager.Models.Event
+
+@{
+    ViewData["Title"] = "EditEvent";
+}
+
+<h2>EditEvent</h2>
+
+<form asp-action="EditEvent">
+    <div class="form-horizontal">
+        <h4>Event</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input asp-for="id" type="hidden" class="form-control" />
+        <span asp-validation-for="id" class="text-danger" />
+
+        <div class="form-group">
+            <label asp-for="name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="date" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="date" type="date" class="form-control" />
+                <span asp-validation-for="date" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="genre" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="genre" class="form-control" />
+                <span asp-validation-for="genre" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="isCanceled" />
+                    <label asp-for="isCanceled"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="EditEvent" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
