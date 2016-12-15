@@ -24,10 +24,11 @@ namespace EventManager.Controllers
         {
             return View();
         }
-        [HttpPost]
+        
+        //[HttpPost]
         public IActionResult AttendEvent(int id)
         {
-            if(User.Identity.IsAuthenticated){
+            if (User.Identity.IsAuthenticated) {
                 ApplicationUser currentUser = _db.Users.Where(u => u.UserName == User.Identity.Name).Single();
                 Event anEvent = _db.Events.Where(e => e.id == id).Single();
                 AttendanceTag tag = new AttendanceTag
@@ -35,6 +36,13 @@ namespace EventManager.Controllers
                     UserId = currentUser.Id,
                     EventId = id
                 };
+                if (_db.AttendanceTags.Where(t=>t.UserId == tag.UserId).Where(t=>t.EventId == tag.EventId).Count() == 0) { 
+                    _db.Add(tag);
+                    _db.SaveChanges();
+                }
+            }else
+            {
+               return RedirectToAction("Login", "Account");
             }
             return RedirectToAction("Index","Home");
         }

@@ -14,5 +14,6 @@ namespace EventManager.Models
         public string genre { get; set; }
         public bool isCanceled { get; set; }
         public List<AttendanceTag> AttendanceTags { get; set; }
+
     }
 }

@@ -8,14 +8,22 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
-            </li>
-        </ul>
-    </form>
+            <li class="dropdown-toggle">
+                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">Hello @UserManager.GetUserName(User)!</a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="Manage" asp-action="ChangeBio">Change Bio</a></li>
+                        <li>
+                            <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Manage Account</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Event" asp-action="MyEvents" title="MyEvents">My Upcoming Events</a>
+                        </li>
+                    </ul>
+                    <li>
+                        <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+                    </li>
+                </ul>
+</form>
 }
 else
 {

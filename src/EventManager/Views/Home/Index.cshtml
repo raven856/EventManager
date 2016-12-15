@@ -4,33 +4,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h2>All Events</h2>
+@*@if (User.Identity.IsAuthenticated)
+{
+    <h2>Events not added to calendar</h2>
+}
+else
+{*@
+    <h2>All Events</h2>
 
 
     @{
         foreach (var events in Model)
         {
 
-            @*<div class="col-lg-3">*@
-                <time datetime=@events.date class="icon">
-                    <em>@events.date.DayOfWeek</em>
-                    <strong>@events.date.ToString("MMMM")</strong>
-                    <span>@events.date.Day</span>
-                </time>
-            @*</div>*@
-            <a asp-controller="Event" asp-action="AttendEvent" class="btn btn-info" id="attend" asp-route-id="@events.id">+Attend</a>
+            <time datetime=@events.date class="icon">
+                <em>@events.date.DayOfWeek</em>
+                <strong>@events.date.ToString("MMMM")</strong>
+                <span>@events.date.Day</span>
+            </time>
+           // if (User.Identity.){
+                <a asp-controller="Event" asp-action="AttendEvent" class="btn btn-info" id="attend" asp-route-id="@events.id">+Attend</a>
+            //}else
+            //{ 
 
-            @*<div class="col-lg-9">
-            </div>*@
+            //}
+
         }
 
         if (User.IsInRole("Artist"))
         {
             <br><br/>
             <br />
-                    
-            <a class="btn btn-lg btn-primary" href="/Event/CreateEvent">Create an Event</a>
+            <a class="btn btn-lg btn-primary" asp-controller="Event" asp-action="CreateEvent">Create an Event</a>
         }
         
-                
     }

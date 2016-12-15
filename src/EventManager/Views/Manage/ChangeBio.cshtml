@@ -1,0 +1,14 @@
+﻿@model EventManager.Models.ApplicationUser
+
+<h2>Change Bio</h2>
+<dt>Bio:</dt>
+
+<form asp-action="ChangeBio" asp-controller="Manage">
+    <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+    <div class="form-group">
+        <input type="text" asp-for="bio" class="form-control" />
+        <span asp-validation-for="bio" class="text-danger" />
+    </div>
+    <input type="submit" value="Save Bio" />
+</form>
+<br />

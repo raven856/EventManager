@@ -8,6 +8,8 @@ namespace EventManager.Models.ManageViewModels
 {
     public class IndexViewModel
     {
+        public ApplicationUser user { get; set; }
+
         public bool HasPassword { get; set; }
 
         public IList<UserLoginInfo> Logins { get; set; }
