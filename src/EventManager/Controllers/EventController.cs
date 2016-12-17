@@ -30,13 +30,13 @@ namespace EventManager.Controllers
         {
             if (User.Identity.IsAuthenticated) {
                 ApplicationUser currentUser = _db.Users.Where(u => u.UserName == User.Identity.Name).Single();
-                Event anEvent = _db.Events.Where(e => e.id == id).Single();
+                Event anEvent = _db.Events.Where(e => e.EventId == id).Single();
                 AttendanceTag tag = new AttendanceTag
                 {
-                    UserId = currentUser.Id,
+                    Id = currentUser.Id,
                     EventId = id
                 };
-                if (_db.AttendanceTags.Where(t=>t.UserId == tag.UserId).Where(t=>t.EventId == tag.EventId).Count() == 0) { 
+                if (_db.AttendanceTags.Where(t=>t.Id == tag.Id).Where(t=>t.EventId == tag.EventId).Count() == 0) { 
                     _db.Add(tag);
                     _db.SaveChanges();
                 }
@@ -55,7 +55,7 @@ namespace EventManager.Controllers
         {
             ApplicationUser currentUser = _db.Users.Where(u => u.UserName == User.Identity.Name).Single();
             anEvent.artist = currentUser;
-            anEvent.artistId = currentUser.Id;
+            anEvent.Id = currentUser.Id;
             anEvent.isCanceled = false;
 
             if (ModelState.IsValid)

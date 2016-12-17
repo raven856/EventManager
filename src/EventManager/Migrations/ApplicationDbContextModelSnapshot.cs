@@ -8,10 +8,9 @@ using EventManager.Models;
 namespace EventManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161213001059_nameEvent")]
-    partial class nameEvent
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -70,12 +69,27 @@ namespace EventManager.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("EventManager.Models.AttendanceTag", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<int>("EventId");
+
+                    b.HasKey("Id", "EventId");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("AttendanceTags");
+                });
+
             modelBuilder.Entity("EventManager.Models.Event", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("EventId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("artistId");
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("date");
 
@@ -87,11 +101,26 @@ namespace EventManager.Migrations
 
                     b.Property<string>("name");
 
-                    b.HasKey("id");
+                    b.HasKey("EventId");
 
-                    b.HasIndex("artistId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("EventManager.Models.FollowingTag", b =>
+                {
+                    b.Property<string>("followerId");
+
+                    b.Property<string>("followeeId");
+
+                    b.HasKey("followerId", "followeeId");
+
+                    b.HasIndex("followeeId");
+
+                    b.HasIndex("followerId");
+
+                    b.ToTable("FollowingTags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -201,11 +230,39 @@ namespace EventManager.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("EventManager.Models.AttendanceTag", b =>
+                {
+                    b.HasOne("EventManager.Models.Event", "anEvent")
+                        .WithMany("AttendanceTags")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EventManager.Models.ApplicationUser", "aUser")
+                        .WithMany("AttendanceTags")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("EventManager.Models.Event", b =>
                 {
                     b.HasOne("EventManager.Models.ApplicationUser", "artist")
                         .WithMany()
-                        .HasForeignKey("artistId");
+                        .HasForeignKey("Id");
+                });
+
+            modelBuilder.Entity("EventManager.Models.FollowingTag", b =>
+                {
+                    b.HasOne("EventManager.Models.ApplicationUser", "followee")
+                        .WithMany("FolloweeTags")
+                        .HasForeignKey("followeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        ;
+
+                    b.HasOne("EventManager.Models.ApplicationUser", "follower")
+                        .WithMany("FollowingTags")
+                        .HasForeignKey("followerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        ;
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

@@ -30,7 +30,7 @@ namespace EventManager.Models
             modelBuilder.Entity<FollowingTag>()
                 .HasOne(ft => ft.follower)
                 .WithMany(u => u.FollowingTags)
-                .HasForeignKey(ft => ft.followerId).IsRequired();
+                .HasForeignKey(ft => ft.followerId);
 
             modelBuilder.Entity<FollowingTag>()
                 .HasOne(ft => ft.followee)
@@ -39,12 +39,12 @@ namespace EventManager.Models
 
 
             modelBuilder.Entity<AttendanceTag>()
-            .HasKey(t => new { t.UserId, t.EventId });
+            .HasKey(t => new { t.Id, t.EventId });
 
             modelBuilder.Entity<AttendanceTag>()
                 .HasOne(at => at.aUser)
                 .WithMany(p => p.AttendanceTags)
-                .HasForeignKey(at => at.UserId);
+                .HasForeignKey(at => at.Id);
 
             modelBuilder.Entity<AttendanceTag>()
                 .HasOne(at => at.anEvent)

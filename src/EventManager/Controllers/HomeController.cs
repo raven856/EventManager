@@ -22,7 +22,7 @@ namespace EventManager.Controllers
             {
                 var currentUser = _db.Users.Where(u => u.UserName == User.Identity.Name).SingleOrDefault();
                 //tags of the user attending events
-                List<AttendanceTag> tags = _db.AttendanceTags.Where(t=>t.UserId==currentUser.Id).ToList();
+                List<AttendanceTag> tags = _db.AttendanceTags.Where(t=>t.Id==currentUser.Id).ToList();
                 //for (int i = events.Count - 1; i >= 0; i--)
                 //{
                 //    //foreach(AttendanceTag t in tags)

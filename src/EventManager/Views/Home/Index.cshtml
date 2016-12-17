@@ -23,7 +23,7 @@ else
                 <span>@events.date.Day</span>
             </time>
            // if (User.Identity.){
-                <a asp-controller="Event" asp-action="AttendEvent" class="btn btn-info" id="attend" asp-route-id="@events.id">+Attend</a>
+                <a asp-controller="Event" asp-action="AttendEvent" class="btn btn-info" id="attend" asp-route-id="@events.EventId">+Attend</a>
             //}else
             //{ 
 
@@ -31,7 +31,7 @@ else
 
         }
 
-        if (User.IsInRole("Artist"))
+        if (User.IsInRole("ARTIST"))
         {
             <br><br/>
             <br />
